@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: hello-k8s-deployment
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: hello
+    spec:
+      containers:
+      - name: hello-k8s
+        image: gcr.io/fulgid-dev/hello-k8s:v2
+        ports:
+        - containerPort: 8080
