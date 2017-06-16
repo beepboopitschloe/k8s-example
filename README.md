@@ -57,3 +57,13 @@ minikube) or remote (on GCE).
 	- `kubectl config use-context $CONTEXT` to use a context
 - `make deploy`
 
+## helpful links
+
+- [rapid development with telepresence](http://www.telepresence.io/tutorials/kubernetes-rapid.html)
+- [guestbook development example](https://cloud.google.com/community/tutorials/developing-services-with-k8s#the-guestbook-application)
+- [example all-in-one config file](https://github.com/kubernetes/kubernetes/blob/master/examples/guestbook/all-in-one/guestbook-all-in-one.yaml)
+- [k8s config tips](https://kubernetes.io/docs/concepts/configuration/overview/)
+- [connecting services with DNS](https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/)
+- [minikube quickstart](https://kubernetes.io/docs/getting-started-guides/minikube/#quickstart)
+- [GCE tutorial that covers a lot of this shiz](https://cloud.google.com/container-engine/docs/tutorials/hello-node)
+
