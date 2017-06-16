@@ -1,0 +1,32 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: second-k8s
+  labels:
+    app: hello
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8081
+  selector:
+    app: hello
+    component: second
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: second-k8s-deployment
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: hello
+        component: second
+    spec:
+      containers:
+      - name: second-k8s
+        image: gcr.io/fulgid-dev/second-k8s:v2
+        ports:
+        - containerPort: 8081

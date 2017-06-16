@@ -1,14 +1,14 @@
 # k8s-example
 
 Simple example service deployed with Kubernetes. Can run on Google Container
-Engine with zero additional configuration.
+Engine with zero additional configuration. Also demonstrates service discovery
+via DNS.
 
 ## TODO
 
 - [ ] figure out how CI works - how do we replace the version in
 	[`k8s/deployment.yaml`](./k8s/deployment.yaml) with the version of the latest
 	build?
-- [ ] add a second service to showcase service discovery with k8s DNS features
 - [ ] find an easy way to configure Google project, service name, etc. without
 	needing to manually edit text files
 

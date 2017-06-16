@@ -6,7 +6,7 @@ usage:
 """
 
 REGISTRY=gcr.io/fulgid-dev
-APP_NAME=hello-k8s
+APP_NAME=second-k8s
 VERSION=$1
 TARGET="$REGISTRY/$APP_NAME:$VERSION"
 
@@ -15,8 +15,7 @@ if [[ -z "$VERSION" ]]; then
 	exit 1
 fi
 
-echo "building target $TARGET"
-echo
+echo "building target $TARGET..."
 
 docker build -t $TARGET .
 gcloud docker -- push $TARGET
