@@ -15,10 +15,11 @@
  */
 
 const app = require('express')()
-const os = require('os')
+const axios = require('axios')
+
+const ECHO_SERVICE_URL = 'http://echo:8080'
 
 const port = process.env.PORT || 8080
-let requests = 0
 
 process.on('SIGINT', () => {
   console.log('shutting down...')
@@ -26,15 +27,28 @@ process.on('SIGINT', () => {
 })
 
 app.use((req, res, next) => {
-  const { url } = req
+  const { url: path } = req
+  const url = ECHO_SERVICE_URL + path
+
   console.log(`Received request for URL: ${url}`)
-  res.status(200).send({
-    requests: ++requests,
-    message: 'hello world',
-    hostname: os.hostname(),
-    path: url
-  })
+  console.info(`PROXY GET ${url}`)
+
+  axios.get(url)
+    .then(echoResp => {
+      const { status, data } = echoResp
+
+      console.info(`RESP FROM ${url}`, data)
+
+      res.status(status)
+        .send({
+          url,
+          data
+        })
+    })
+    .catch(() => {
+      console.error(`FAILURE FROM ${url}`)
+      res.status(500).send({ url, error: 'request failed' })
+    })
 })
 
 app.listen(port, () => console.log(`server listening on port ${port}`))
-

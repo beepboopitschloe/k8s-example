@@ -2,31 +2,31 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: hello-k8s
+  name: proxy
   labels:
-    app: hello
+    app: k8s-example
 spec:
   type: LoadBalancer
   ports:
   - port: 8080
   selector:
-    app: hello
-    component: hello
+    app: k8s-example
+    component: proxy
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: hello-k8s-deployment
+  name: proxy-deployment
 spec:
   replicas: 2
   template:
     metadata:
       labels:
-        app: hello
-        component: hello
+        app: k8s-example
+        component: proxy
     spec:
       containers:
-      - name: hello-k8s
-        image: gcr.io/fulgid-dev/hello-k8s:v2
+      - name: proxy
+        image: gcr.io/fulgid-dev/proxy:v1
         ports:
         - containerPort: 8080

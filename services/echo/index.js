@@ -15,11 +15,10 @@
  */
 
 const app = require('express')()
-const axios = require('axios')
+const os = require('os')
 
-const HELLO_SERVICE_URL = 'http://hello-k8s:8080'
-
-const port = process.env.PORT || 8081
+const port = process.env.PORT || 8080
+let requests = 0
 
 process.on('SIGINT', () => {
   console.log('shutting down...')
@@ -27,29 +26,14 @@ process.on('SIGINT', () => {
 })
 
 app.use((req, res, next) => {
-  const { url: path } = req
-  const url = HELLO_SERVICE_URL + path
-
+  const { url } = req
   console.log(`Received request for URL: ${url}`)
-  console.info(`PROXY GET ${url}`)
-
-  axios.get(url)
-    .then(helloResp => {
-      const { status, data } = helloResp
-
-      console.info(`RESP FROM ${url}`, data)
-
-      res.status(status)
-        .send({
-          url,
-          data
-        })
-    })
-    .catch(() => {
-      console.error(`FAILURE FROM ${url}`)
-      res.status(500).send({ url, error: 'request failed' })
-    })
+  res.status(200).send({
+    requests: ++requests,
+    message: 'hello world',
+    hostname: os.hostname(),
+    path: url
+  })
 })
 
 app.listen(port, () => console.log(`server listening on port ${port}`))
-
